@@ -1,3 +1,9 @@
+<?php
+include 'controller/controller.php';
+
+$c = new Controller();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +17,7 @@
     <script src="js/jquery-3.6.0.js"></script>
     <script src="js/bootstrap.bundle.js"></script>
     <script src="js/sweetalert2.all.min.js"></script>
+    <script src="js/process.js"></script>
 </head>
 <body>
     <div class="container">
@@ -25,7 +32,18 @@
                 <div class="col-md-6">
                     <label for="">Curso:</label>
                     <select name="curso" id="" class="form-control">
+                        <?php
+                            $lista = $c->listarcursos();
 
+                            if (count($lista) <= 0) {
+                                echo "<option value=''>No hay cursos</option>";
+                            }else{
+                                for ($i=0; $i < count($lista); $i++) { 
+                                    $CGCU = $lista[$i];
+                                    echo "<option value='".$CGCU->getId()."'>".$CGCU->getNombre()."</option>";                                        
+                                }
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="col-md-6">
@@ -36,12 +54,26 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="">Profesor:</label>
-                    <select name="profesor" class="form-control" id=""></select>
+                    <select name="profesor" class="form-control" id="">
+                    <?php
+                            $lista = $c->listardocentes();
+                            for ($i=0; $i < count($lista); $i++) { 
+                                $CGCU = $lista[$i];
+                                echo "<option value='".$CGCU->getId()."'>".$CGCU->getNombre()."</option>";                                        
+                            }
+                        ?>
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <label for="">Condicion de recepción de equipos</label>
                     <select name="condicion" class="form-control" id="">
-
+                    <?php
+                            $lista = $c->listarcondiciones();
+                            for ($i=0; $i < count($lista); $i++) { 
+                                $CGCU = $lista[$i];
+                                echo "<option value='".$CGCU->getId()."'>".$CGCU->getNombre()."</option>";                                        
+                            }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -75,6 +107,21 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                    <?php
+                        $lista = $c->listarControl();
+                        for ($i=0; $i < count($lista); $i++) {
+                            $CGCU = $lista[$i];
+                            echo "<tr>";
+                            echo "<td>".$CGCU->getCurso()."</td>";
+                            echo "<td>".$CGCU->getAsignatura()."</td>";
+                            echo "<td>".$CGCU->getProfesor()."</td>";
+                            echo "<td>".$CGCU->getCondicion()."</td>";
+                            echo "<td>".$CGCU->getFecha()." ".$CGCU->getHora()."</td>";
+                            echo "<td class='text-center'><a href='#' type='button' data-bs-toggle='modal' data-bs-target='#modaldetails' onclick='detalles(".$CGCU->getID().")'><img src='img/details.svg' alt=''></a></td>";                    
+                            echo "<td class='text-center'><a href='#' type='button' data-bs-toggle='modal' data-bs-target='#modaledit' onclick='salida(".$CGCU->getID().")'><img src='img/edit.svg' alt=''></a></td>";
+                        }
+                    ?>  
                         <tr>
                             <td>1 Basico</td>
                             <td>lenguaje</td>

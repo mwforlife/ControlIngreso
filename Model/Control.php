@@ -11,13 +11,12 @@ class Control{
     private $observacioningreso;
     private $observacionsalida;
 
-    public function Control($id, $curso, $asignatura, $profesor, $condicion, $estado, $fecha, $hora, $observacioningreso, $observacionsalida) {
+    public function Control($id, $curso, $asignatura, $profesor, $condicion, $fecha, $hora, $observacioningreso, $observacionsalida) {
         $this->id = $id;
         $this->curso = $curso;
         $this->asignatura = $asignatura;
         $this->profesor = $profesor;
         $this->condicion = $condicion;
-        $this->estado = $estado;
         $this->fecha = $fecha;
         $this->hora = $hora;
         $this->observacioningreso = $observacioningreso;
@@ -44,9 +43,6 @@ class Control{
         return $this->condicion;
     }
 
-    public function getEstado() {
-        return $this->estado;
-    }
 
     public function getFecha() {
         return $this->fecha;
@@ -84,9 +80,6 @@ class Control{
         $this->condicion = $condicion;
     }
 
-    public function setEstado($estado) {
-        $this->estado = $estado;
-    }
 
     public function setFecha($fecha) {
         $this->fecha = $fecha;

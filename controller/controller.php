@@ -1,8 +1,8 @@
 <?php
-include '../Model/Curso.php';
-include '../Model/Condicion.php';
-include '../Model/Docente.php';
-include '../Model/Control.php';
+include 'Model/Curso.php';
+include 'Model/Condicion.php';
+include 'Model/Docente.php';
+include 'Model/Control.php';
 
 
 class Controller{
@@ -24,7 +24,7 @@ class Controller{
 
      public function listarcursos(){
             $this->conexion();
-            $sql = "SELECT * FROM curso";
+            $sql = "SELECT * FROM curso ORDER BY nombre";
             $resultado = $this->mi->query($sql);
             $lista = array();
             while ($rs = mysqli_fetch_array($resultado)) {
@@ -39,12 +39,12 @@ class Controller{
 
     public function listarcondiciones(){
             $this->conexion();
-            $sql = "SELECT * FROM EstadoComponentes";
+            $sql = "SELECT * FROM EstadoComponentes order by nom_est_comp asc";
             $resultado = $this->mi->query($sql);
             $lista = array();
             while ($rs = mysqli_fetch_array($resultado)) {
-                $id = $rs['id_estado'];
-                $nombre = $rs['nombre'];
+                $id = $rs['id_est_comp'];
+                $nombre = $rs['nom_est_comp'];
                 $condicion = new Condicion($id, $nombre);
                 $lista[] = $condicion;
             }
@@ -54,7 +54,7 @@ class Controller{
 
     public function listardocentes(){
             $this->conexion();
-            $sql = "SELECT * FROM CGDocente";
+            $sql = "SELECT * FROM CGDocente order by nom_doc asc";
             $resultado = $this->mi->query($sql);
             $lista = array();
             while ($rs = mysqli_fetch_array($resultado)) {
@@ -70,12 +70,12 @@ class Controller{
 
     public function listarControl(){
             $this->conexion();
-            $sql = "SELECT id_con, curso.nombre as curso, asignatura, nom_doc, ape_doc, fecha, hora, observacioningreso, observacionsalida FROM control, curso, CGDocente WHERE control.id_cur = curso.id_cur AND control.id_doc =CGDocente.id_doc;           ";
+            $sql = "SELECT id_con, curso.nombre as cursos, asignatura, nom_doc as profesor, nom_est_comp as condicion, ape_doc, fecha, hora, observacioningreso, observacionsalida FROM control, curso, CGDocente, EstadoComponentes WHERE control.id_cur = curso.id_cur AND control.id_doc =CGDocente.id_doc and control.id_est=EstadoComponentes.id_est_comp;";
             $resultado = $this->mi->query($sql);
             $lista = array();
             while ($rs = mysqli_fetch_array($resultado)) {
                 $id = $rs['id_con'];
-                $curso = $rs['curso'];
+                $curso = $rs['cursos'];
                 $asignatura = $rs['asignatura'];
                 $profesor = $rs['profesor'];
                 $condicion = $rs['condicion'];

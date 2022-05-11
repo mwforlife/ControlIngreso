@@ -4,7 +4,7 @@ create table curso(
 id_cur int not null auto_increment primary key,
 nombre varchar(30) not null
 );
-
+drop table control;
 create table control(
 id_con int not null auto_increment primary key,
 id_cur int not null references curso(id_cur),
@@ -43,3 +43,9 @@ insert into curso(nombre) values('Prekinder A');
 insert into curso(nombre) values('Prekinder B');
 insert into curso(nombre) values('Kinder A');
 insert into curso(nombre) values('Kinder B');
+
+
+SELECT id_con, curso.nombre as cursos, asignatura, nom_doc as profesor, nom_est_comp as condicion, ape_doc, fecha, hora, observacioningreso, observacionsalida FROM control, curso, CGDocente, EstadoComponentes WHERE control.id_cur = curso.id_cur AND control.id_doc =CGDocente.id_doc and control.id_est=EstadoComponentes.id_est_comp; 
+select * from control;
+
+insert into control values(null,16,"Lenguaje",1,1, "2022-05-03", "09:40","Ninguna", "Se cambio el teclado en PC 18");
