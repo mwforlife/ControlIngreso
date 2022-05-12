@@ -24,7 +24,7 @@ $c = new Controller();
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-7 d-flex justify-content-between align-items-center">
+            <div class="col-md-7 d-flex flex-column justify-content-center align-items-center flex-wrap">
                 <img src="img/log.png" width="150" alt="">
                 <h3 class="card-title">Control de Ingreso - Sala Computación</h3>
             </div>
