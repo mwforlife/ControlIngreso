@@ -70,7 +70,7 @@ class Controller{
 
     public function listarControl(){
             $this->conexion();
-            $sql = "SELECT id_con, curso.nombre as cursos, asignatura, nom_doc as profesor, nom_est_comp as condicion, ape_doc, fecha, hora, observacioningreso, observacionsalida FROM control, curso, CGDocente, EstadoComponentes WHERE control.id_cur = curso.id_cur AND control.id_doc =CGDocente.id_doc and control.id_est=EstadoComponentes.id_est_comp;";
+            $sql = "SELECT id_con, curso.nombre as cursos, asignatura, nom_doc as profesor, nom_est_comp as condicion, ape_doc, fecha, hora_ingreso, observacioningreso,hora_salida, observacionsalida, curdate() as fechacontrol FROM control, curso, CGDocente, EstadoComponentes WHERE control.id_cur = curso.id_cur AND control.id_doc =CGDocente.id_doc and control.id_est=EstadoComponentes.id_est_comp order by fecha desc;";
             $resultado = $this->mi->query($sql);
             $lista = array();
             while ($rs = mysqli_fetch_array($resultado)) {
@@ -80,16 +80,20 @@ class Controller{
                 $profesor = $rs['profesor'];
                 $condicion = $rs['condicion'];
                 $fecha = $rs['fecha'];
-                $hora = $rs['hora'];
+                $hora = $rs['hora_ingreso'];
                 $observacioningreso = $rs['observacioningreso'];
                 $observacionsalida = $rs['observacionsalida'];
+                $hora_salida = $rs['hora_salida'];
+                $fechacontrol = $rs['fechacontrol'];
 
-                $control = new Control($id, $curso, $asignatura, $profesor, $condicion, $fecha, $hora, $observacioningreso, $observacionsalida);
+                $control = new Control($id, $curso, $asignatura, $profesor, $condicion, $fecha, $hora, $observacioningreso, $observacionsalida,$hora_salida, $fechacontrol);
                 $lista[] = $control;
             }
             $this->desconexion();
             return $lista;
     }
+
+    /**Iniciar Insert */
 
 
 

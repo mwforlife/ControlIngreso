@@ -4,7 +4,7 @@ create table curso(
 id_cur int not null auto_increment primary key,
 nombre varchar(30) not null
 );
-drop table control;
+
 create table control(
 id_con int not null auto_increment primary key,
 id_cur int not null references curso(id_cur),
@@ -12,9 +12,10 @@ asignatura varchar(40) not null,
 id_doc int not null references CGDocentes(id_doc),
 id_est int not null references Estadocomponentes(id_est_comp),
 fecha date not null,
-hora time not null,
+hora_ingreso time not null,
 observacioningreso varchar(100) not null,
-observacionsalida varchar(100) not null
+observacionsalida varchar(100),
+hora_salida time,
 );
 
 insert into curso(nombre) values('1 Basico A');

@@ -13,10 +13,12 @@ $c = new Controller();
     <link rel="icon" href="img/time.svg">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="DataTables/datatables.min.css">
     
     <script src="js/jquery-3.6.0.js"></script>
     <script src="js/bootstrap.bundle.js"></script>
     <script src="js/sweetalert2.all.min.js"></script>
+    <script src="DataTables/datatables.min.js"></script>
     <script src="js/process.js"></script>
 </head>
 <body>
@@ -27,7 +29,7 @@ $c = new Controller();
                 <h3 class="card-title">Control de Ingreso - Sala Computación</h3>
             </div>
         </div>
-        <form action="">
+        <form action="" id="form-regis">
             <div class="row">
                 <div class="col-md-6">
                     <label for="">Curso:</label>
@@ -84,8 +86,8 @@ $c = new Controller();
                 </div>
             </div>
             <hr>
-            <div class="row">
-                <div class="col-md-4">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-6 d-flex justify-content-center gap-3">
                     <button class="btn btn-warning btn-lg btn-block">Restablecer</button>
                     <button class="btn btn-success btn-lg btn-block">Registrar</button>
                 </div>
@@ -94,14 +96,14 @@ $c = new Controller();
         <hr>
         <div class="row">
             <div class="col">
-                <table class="table table-dark table-stripped table-hover">
+                <table id="tabla-control" class="table table-dark table-stripped table-hover">
                     <thead>
                         <tr>
                             <th>Curso</th>
                             <th>Asignatura</th>
                             <th>Profesor</th>
                             <th>Condiciones de los equipos</th>
-                            <th>Fecha y Hora</th>
+                            <th>Fecha y Hora Ingreso</th>
                             <th>Detalles</th>
                             <th>Marcar Salida</th>
                         </tr>
@@ -117,21 +119,21 @@ $c = new Controller();
                             echo "<td>".$CGCU->getAsignatura()."</td>";
                             echo "<td>".$CGCU->getProfesor()."</td>";
                             echo "<td>".$CGCU->getCondicion()."</td>";
-                            echo "<td>".$CGCU->getFecha()." ".$CGCU->getHora()."</td>";
+                            echo "<td>".$CGCU->getFecha()." ".$CGCU->getHoraIngreso()."</td>";
                             echo "<td class='text-center'><a href='#' type='button' data-bs-toggle='modal' data-bs-target='#modaldetails' onclick='detalles(".$CGCU->getID().")'><img src='img/details.svg' alt=''></a></td>";                    
-                            echo "<td class='text-center'><a href='#' type='button' data-bs-toggle='modal' data-bs-target='#modaledit' onclick='salida(".$CGCU->getID().")'><img src='img/edit.svg' alt=''></a></td>";
+                            if ($CGCU->getobservacionSalida() == "") {
+                                if ($CGCU->getFechacontrol() == $CGCU->getFecha()) {
+                                    echo "<td class='text-center'><a href='#' type='button' data-bs-toggle='modal' data-bs-target='#modaledit' onclick='salida(".$CGCU->getID().")'><img src='img/edit.svg' alt=''></a></td>";
+                                }else{
+                                    echo "<td class='text-center'><img src='img/error.svg' alt=''></td>";
+                                }
+                                
+                            }else{
+                                echo "<td class='text-center'><img src='img/check.svg' alt=''></td>";
+                            }
+                            
                         }
                     ?>  
-                        <tr>
-                            <td>1 Basico</td>
-                            <td>lenguaje</td>
-                            <td>bastian muñoz</td>
-                            <td>Optimo</td>
-                            <td>12-02-2022 08:12</td>
-                            <td class="text-center"><a href="#" type="button" data-bs-toggle="modal" data-bs-target="#modaldetails" onclick=""><img src="img/details.svg" alt=""></a></td>
-                            
-                            <td class="text-center"><a href="#" type="button" data-bs-toggle="modal" data-bs-target="#modaledit" onclick=""><img src="img/edit.svg" alt=""></a></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -173,7 +175,7 @@ $c = new Controller();
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <form action="">
+            <form action="" id="form-regis1">
             <div class="row justify-content-center">
                 <div id="detalles1" class="col-md-12">
                     
