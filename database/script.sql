@@ -15,7 +15,7 @@ fecha date not null,
 hora_ingreso time not null,
 observacioningreso varchar(100) not null,
 observacionsalida varchar(100),
-hora_salida time,
+hora_salida time
 );
 
 insert into curso(nombre) values('1 Basico A');
